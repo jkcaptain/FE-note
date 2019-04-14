@@ -6,7 +6,7 @@
 
 > PHP（外文名:PHP: Hypertext Preprocessor，中文名：“超文本预处理器”）是一种通用开源脚本语言。语法吸收了C语言、Java和Perl的特点，利于学习，使用广泛，主要适用于Web开发领域。
 
-3. 安装完 XAMPP 开发环境后， 启动 Control Panel 面板，点击 Explorer 按钮，就会打开XAMPP的安装目录。可以将代码资源放在安装目录的 `htdocs` 文件夹下。
+3. 安装完 XAMPP 开发环境后， 启动 Control Panel 面板，点击 Explorer 按钮，就会打开XAMPP的安装目录。可以将代码资源放在安装目录的 `htdocs` 文件夹下。这样在浏览器中就可以通过 `http://localhost/projectName/` 来访问了。
 
 # php 基本规则
 
