@@ -2,6 +2,14 @@
 
 安装好 vmWare 和 ubuntu 之后，可以直接在 Terminal 工具下练习命令行操作。
 
+切换路径
+```
+cd 命令
+
+cd xxx
+cd ..
+```
+
 查看文件/目录
 ```
 ls 命令
