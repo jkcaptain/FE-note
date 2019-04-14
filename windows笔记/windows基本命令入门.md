@@ -22,6 +22,7 @@ type nul > test.js
 
 创建文件夹
 ```
+mkdir 命令
 md 命令
 
 md floder
