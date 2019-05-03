@@ -48,15 +48,16 @@ try {
     $selectSQL = "select * from news";
     $insertSQL = "INSERT INTO news (news_title, news_img, news_content, add_time) VALUES ('测试pdo', 'png', '456', '2019-05-03')";
 
+    echo "<br/>";
     $selectRes = $dbh->query($selectSQL);  // 执行sql，返回结果集
     foreach($selectRes as $row) {
-        print $row['news_title'] . "<br/>";
-        print $row['news_img'] . "<br/>";
-        print $row['news_content'] . "<br/>";
+        print $row['news_title'] . "&nbsp;&nbsp;&nbsp;";
+        print $row['news_img'] . "&nbsp;&nbsp;&nbsp;";
+        print $row['news_content'] . "&nbsp;&nbsp;&nbsp;";
         print $row['add_time'] . "<br/>";
     }
-    echo "<br/>";
 
+    echo "<br/>";
     $insertRow = $dbh->exec($insertSQL);   // 执行sql，返回影响的行数
     echo "插入数据成功, 已插入" . $insertRow . "条";
     
