@@ -35,20 +35,36 @@ class Person1 {
     }
 }
 
+// 第一种调用方式
 $xiaoming = new Person1('xiaoming', 21);
 $xiaohei = new Person1('xiaohei', 23);
+
+// 第二种调用方式，不使用变量赋值
+// new Person1('xiaoming', 21);
+// new Person1('xiaohei', 23);
+
 echo "<hr>";
 
+// 第一种调用方式 - 输出
 // hello xiaoming
 // hello xiaohei
-
 // bye bye xiaohei
 // bye bye xiaoming
+
+// 第二种调用方式 - 输出
+// hello xiaoming
+// bye bye xiaoming
+// hello xiaohei
+// bye bye xiaohei
 ```
 
 ### 注意事项
 
+如果第一种调用方式，
 php析构函数，是按照栈结构的顺序执行，也就是先入后出，后入先出。越早实例化的对象，越靠后执行析构函数。
+
+如果是第二种调用方式，
+php析构函数，会每次new 时，依次触发 __destruct。推测因为没有赋值，所以 new 完就被回收了。
 
 为什么会这样，以下是我的个人推测：
 
