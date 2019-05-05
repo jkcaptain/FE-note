@@ -14,6 +14,50 @@
 | 在子类中 | 可以 | 不可以 | 可以 |
 | 在类的外部 | 可以 | 不可以 | 不可以 |
 
+``` php
+class Person {
+    public $name;
+    private $age;
+    protected $money;
+
+    public function __construct($name, $age, $money) {
+        $this->name = $name;
+        $this->age = $age;
+        $this->money = $money;
+    }
+
+    public function getUserCard() {
+        echo "parent--" . $this->name . "--" . $this->age . "--" . $this->money;
+    }
+}
+
+class YellowPerson extends Person {
+    public function __construct($name, $age, $money) {
+        parent::__construct($name, $age, $money);
+    }
+
+    public function getUserCard() {
+        echo "child--" . $this->name . "--" . $this->age . "--" . $this->money; 
+    }
+
+    public function getUserAge() {
+        echo "this->age " . $this->age;
+    }
+
+    public function getUserMoney() {
+        echo "this->money " . $this->money;
+    }
+}
+
+$person = new YellowPerson('jk', 26, '100m');
+$person->getUserCard();  // child--jk----100m
+echo "<br/>";
+
+// $person->getUserAge();  // Undefined property: YellowPerson::$age， 因为 private 属性不能被继承
+
+$person->getUserMoney(); // this->money 100m
+echo "<br/>";
+```
 一句话总结：私有的不可继承，受保护的可以继承。
 ### 多态
 多态的表现包括重写和重载
