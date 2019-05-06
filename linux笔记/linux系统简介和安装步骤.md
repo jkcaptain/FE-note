@@ -20,12 +20,12 @@ linux系统在业界经常用来做服务器，所以还是需要掌握的。
 
 第三步：vmWare 中新建虚拟机，安装 ubuntu 操作系统
 注意：这里选择第一步下载的 ubuntu.iso 文件
-![Markdown](http://i2.bvimg.com/683652/1e864736892e1da9.png)
+![Markdown](https://raw.githubusercontent.com/jkcaptain/FE-note/master/images/linux%E7%AC%94%E8%AE%B0/1.png)
 之后便一路下一步即可
 为了性能考虑，这里选择将虚拟磁盘存储为单个文件
-![Markdown](http://i2.bvimg.com/683652/8e871482883aa56e.png)
+![Markdown](https://raw.githubusercontent.com/jkcaptain/FE-note/master/images/linux%E7%AC%94%E8%AE%B0/2.png)
 然后自定义硬件，分别设置内存为2GB，处理器的内核数量为2
-![Markdown](http://i2.bvimg.com/683652/ee044a3715010a13.png)
+![Markdown](https://raw.githubusercontent.com/jkcaptain/FE-note/master/images/linux%E7%AC%94%E8%AE%B0/3.png)
 最后，点击完成，启动虚拟机，它会自动帮我们安装 ubuntu 系统。
 安装需要点时间，估计半小时左右。
 
