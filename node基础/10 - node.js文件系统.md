@@ -60,6 +60,8 @@ fs.readdir();
 fs.rmdir();
 ```
 
+api比较多，只列出常用的部分，具体用法在使用时，再去查看文档。
+
 参考链接
 
 [Node.js v10.15.3 文档](http://nodejs.cn/api/fs.html)
