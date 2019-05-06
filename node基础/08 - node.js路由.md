@@ -2,11 +2,11 @@
 
 ### 基础回顾
 
-1. MVC 模式下，路由规则通常是固定。例如：`http://www.example.com/a/b`，`a` 代表 `controller`, `b` 代表 `action`。
+1. MVC 模式下，路由规则通常是固定的。例如：`http://www.example.com/a/b`，`a` 代表 `controller`, `b` 代表 `action`。
 
 2. 路由模块使用依赖注入的方式，其实在这里可以理解为传参吧。
 
-3. 路由通常分为 GET 和 POST，GET 的请求内容在 url 中， POST 的请求内容在请求体中。
+3. 路由通常分为 GET 和 POST 请求，GET 的请求内容在 url 中， POST 的请求内容在请求体中。
 
 ### 路由定义
 
