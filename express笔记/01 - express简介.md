@@ -174,6 +174,8 @@ res.download()         // 触发下载
 
 [Express 官方文档](http://www.expressjs.com.cn/4x/api.html)
 
+[Express 中文文档](http://expressjs.com/zh-cn/)
+
 [Node.js Express 框架 - 菜鸟教程](https://www.runoob.com/nodejs/nodejs-express-framework.html)
 
 
