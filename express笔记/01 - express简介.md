@@ -59,8 +59,9 @@ app.get('/json', (req, res) => {
 });
 ```
 
-#### 添加一个post请求
+#### 添加 post 请求
 
+简单的 post
 ``` javascript
 const bodyParser = require('body-parser');
 
@@ -69,11 +70,58 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // 定义一个 post 请求
 app.post('/search', (req, res) => {
     let { search } = req.body;
-    // 跳转到百度搜索
+    // 重定向到百度搜索
     res.redirect('https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd='+ search +'&rsv_pq=946740b200025cd9&rsv_t=1743eVOPB4n6RtORMgAy8xVJsgEZcF63pK%2FN%2Bw7gCQ7fh9SKsC0CQDcPj%2F8&rqlang=cn&rsv_enter=0&inputT=1946&rsv_sug4=2331')
 });
+```
 
-// 如果是文件上传，需要用到 multer 工具库
+上传文件
+``` html
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" size="50">
+    <input type="submit" value="上传文件" />
+</form>
+```
+``` javascript
+app.post('/upload', (req, res) => {
+    const [file] = req.files;
+    const rootPath = '/static';
+    const fileParentPath = `${__dirname}/${rootPath}`;
+    const desFile = `${fileParentPath}/${file.originalname}`;
+
+    // 写入文件
+    const appendFile = () => {
+        fs.readFile(file.path, (err, data) => {
+            fs.writeFile(desFile, data, err => {
+                let result = {};
+                if (err) {
+                    console.error(err);
+                } else {
+                    result = {
+                        message: 'File uploaded successfully',
+                        filename: file.originalname
+                    }
+                }
+                console.log(result);
+                res.json(result);
+            });
+        });
+    };
+
+    // 如果目录不存在，就创建目录
+    fs.access(fileParentPath, err => {
+        if (err) {
+            console.log('目录不存在');
+            console.log(err);
+            fs.mkdir(fileParentPath, err => {
+                appendFile();
+            });
+        } else {
+            console.log('目录存在');
+            appendFile();
+        }
+    });
+});
 ```
 
 #### 设置静态文件
@@ -111,4 +159,21 @@ res.json()             // 返回一个 json 对象
 res.redirect()         // 后端重定向
 res.download()         // 触发下载
 ```
+
+### 流程小结
+
+1. 安装 express，引入并执行 `app=express()`
+
+2. app listen 端口，启动一个后台服务
+
+3. app.get 设置基础路由，然后 res.send, res.sendFile 返回响应数据
+
+4. 如果不想每次改代码都重启服务，可以使用 supervisor。如果处理 post 请求，使用 `body-parser`，如果需要上传文件，使用 `multer`，如果需要处理 cookie，使用`cookie-parser`
+
+### 参考链接
+
+[Express 官方文档](http://www.expressjs.com.cn/4x/api.html)
+
+[Node.js Express 框架 - 菜鸟教程](https://www.runoob.com/nodejs/nodejs-express-framework.html)
+
 
