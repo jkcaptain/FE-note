@@ -156,6 +156,7 @@ response 对象上有很多响应数据的信息
 res.send()             // 发送 http 响应数据
 res.sendFile()         // 以某个模板作为响应
 res.json()             // 返回一个 json 对象
+res.render()           // 返回一个已渲染的视图
 res.redirect()         // 后端重定向
 res.download()         // 触发下载
 ```
