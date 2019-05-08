@@ -6,7 +6,9 @@
 
 ### 用法以及注意事项
 
-1. 我们使用 `express生成器` 来自动生成工程目录，并使用 `ejs` 作为模板引擎。
+#### 使用生成器
+
+我们使用 `express生成器` 来自动生成工程目录，并使用 `ejs` 作为模板引擎。
 
 ``` shell
 npm install express-generator -g
@@ -16,7 +18,10 @@ express --view=ejs class05
 
 生成项目工程之后，cmd窗口会提示我们之后几步的操作。告诉我们怎么`npm start` 并开启 debug 模式。
 
-2. 如果不使用生成器，自己设置模板引擎的话，需要在 `app.js`，设置模板引擎的一些选项。
+#### 自定义
+
+如果不使用生成器，自己规划工程目录的话，需要在 `app.js`，设置模板引擎的一些选项。
+
 ``` javascript
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
