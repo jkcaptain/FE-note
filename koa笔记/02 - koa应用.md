@@ -8,7 +8,7 @@ koa 在语法以及框架设计方面，和 express 还是很像的。
 
 其实，我们使用中间件处理请求和响应时，可以理解为都是在处理 `ctx` 这个上下文对象。
 
-`koa`注册中间件的时候，有一个区别：`express`的参数有`req`和`res`，而 `koa` 就只有一个 `ctx`，它上面代理了 `koa`的`request`和`response`对象的api，也就是使用了别名，使得代码更简洁。
+`koa`注册中间件的时候，有一个区别：`express`的参数有`req`和`res`，而 `koa` 就只有一个 `ctx`，这个`ctx`做了一个委托处理，代理了 `koa`的`request`和`response`对象的相关api，也就是使用了别名，使得代码更简洁。
 
 ``` javascript
 const Koa = require('koa');
