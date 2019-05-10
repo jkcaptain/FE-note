@@ -82,6 +82,10 @@ vi xxx
 
 i       // 进入编辑模式
 
+u       // 撤销
+
+:/xxx   // 查找
+
 :wq    
 
 :q
@@ -125,10 +129,53 @@ systemctl restart nginx    // 重启服务
 
 
 
-
 #### 注意事项
 
 /boot 目录最好不要碰
 
+### linux 下 安装 xampp
+
+#### 有两种下载方式
+
+1. 可使用 `wget` 工具
+
+2. 先在 windows 下载好，上传到虚拟机
+
+我使用的是第二种，将安装文件上传到 CentOS 的 opt 目录下。
+``` shell
+scp d:\xampp-linux-x64-7.3.5-0-installer.run root@192.168.1.103:/opt
+```
+#### 安装 lampp
+
+登录 CentOS，准备安装
+``` shell
+ssh root@192.168.1.103
+
+cd /opt
+chmod 755 xampp-linux-*-installer.run
+sudo ./xampp-linux-*-installer.run
+```
+之后就是一直 yes yes，直到安装完成，就可以在 `/opt` 目录下，看到已安装好的 `lammpp` 了。
+
+#### 操作 lampp
+
+``` shell
+sudo /opt/lampp/lampp start   // 第一次启动，可能 netstat 命令报错，其实已经运行了
+sudo /opt/lampp/lampp stop    // 停止 lampp 服务
+```
+如果启动的时候，提示说`找不到 netstat命令`，可以先安装`net-tools`来解决
+``` shell
+yum install net-tools
+```
+然后在 windows 宿主机就可以直接访问了，我的虚拟机 ip 是 `192.168.1.103`
+
+``` shell
+http://192.168.1.103:80
+```
+
 ### 总结
+
+### 参考链接
+
+[Linux Frequently Asked Questions](https://www.apachefriends.org/faq_linux.html)
 
