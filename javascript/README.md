@@ -1,1 +1,1 @@
-# JavaScript 学习笔记
+# javascript 学习笔记
