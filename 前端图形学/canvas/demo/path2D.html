@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>path2D</title>
+  </head>
+  <body>
+    <div>
+      <canvas id="c1"></canvas>
+    </div>
+
+    <script>
+      function darwPath2D() {
+        let ctx = document.getElementById("c1").getContext("2d");
+
+        let rectangle = new Path2D();
+        rectangle.rect(10, 10, 50, 50);
+
+        let circle = new Path2D();
+        circle.moveTo(125, 35);
+        circle.arc(100, 35, 25, 0, 2 * Math.PI);
+
+        ctx.strokeStyle = '#FFA500';
+        ctx.stroke(rectangle);
+
+        ctx.fillStyle = '#2af';
+        ctx.fill(circle);
+      }
+
+      darwPath2D();
+    </script>
+  </body>
+</html>
