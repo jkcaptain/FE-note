@@ -9,7 +9,7 @@
   <body>
     <div><canvas id="c1"></canvas></div>
     <div><canvas id="c2"></canvas></div>
-    <div><canvas id="c3"></canvas></div>
+    <div><canvas id="c3" height="9999px"></canvas></div>
 
     <script>
       // 简单使用
@@ -48,15 +48,33 @@
             ctx.restore();
           }
         }
-      }      
+      }
       drawExampleTwo();
 
       // 旋转
       function drawExampleThree() {
         let ctx = document.getElementById("c3").getContext("2d");
 
-        
+        ctx.translate(100, 100);
+        for (let i = 1; i <= 6; i++) {
+          ctx.save();
+          ctx.fillStyle = "rgb(" + 51 * i + "," + (255 - 51 * i) + ",255)";
+
+          for (let j = 0; j < i * 6; j++) {            
+            ctx.rotate((Math.PI * 2) / (i * 6));  // 均分一个圆
+            ctx.beginPath();
+            ctx.arc(0, i * 13.5, 5, 0 , Math.PI * 2, true);
+            ctx.fill();
+          }
+
+          ctx.restore();
+        }
       }
+      drawExampleThree();
+
+      // 缩放
+
+      // 变形
     </script>
   </body>
 </html>
