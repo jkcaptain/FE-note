@@ -9,8 +9,9 @@
   <body>
     <div><canvas id="c1"></canvas></div>
     <div><canvas id="c2"></canvas></div>
-    <div><canvas id="c3" height="9999px"></canvas></div>
-
+    <div><canvas id="c3" height="300px"></canvas></div>
+    <div><canvas id="c4"></canvas></div>
+    <div><canvas id="c5" height="300px;"></canvas></div>
     <script>
       // 简单使用
       function drawExampleOne() {
@@ -60,10 +61,10 @@
           ctx.save();
           ctx.fillStyle = "rgb(" + 51 * i + "," + (255 - 51 * i) + ",255)";
 
-          for (let j = 0; j < i * 6; j++) {            
-            ctx.rotate((Math.PI * 2) / (i * 6));  // 均分一个圆
+          for (let j = 0; j < i * 6; j++) {
+            ctx.rotate((Math.PI * 2) / (i * 6)); // 均分一个圆
             ctx.beginPath();
-            ctx.arc(0, i * 13.5, 5, 0 , Math.PI * 2, true);
+            ctx.arc(0, i * 13.5, 5, 0, Math.PI * 2, true);
             ctx.fill();
           }
 
@@ -73,8 +74,40 @@
       drawExampleThree();
 
       // 缩放
+      function drawExampleFour() {
+        let ctx = document.getElementById("c4").getContext("2d");
+
+        ctx.save();
+        ctx.scale(10, 3);
+        ctx.fillRect(1, 10, 10, 10);
+
+        ctx.restore();
+
+        ctx.scale(-1, 1);
+        ctx.font = "48px serif";
+        ctx.textBaseline = "top";
+        ctx.fillText("MDN", -100, 100);
+      }
+      drawExampleFour();
 
       // 变形
+      function drawExampleFive() {
+        let ctx = document.getElementById("c5").getContext("2d");
+
+        let sin = Math.sin(Math.PI / 6);
+        let cos = Math.cos(Math.PI / 6);
+
+        ctx.translate(100, 100);
+
+        let c = 0;
+        for (let i = 0; i <= 12; i++) {
+          c = Math.floor((255 / 12) * i);
+          ctx.fillStyle = `rgb(${c}, ${c}, ${c})`;
+          ctx.fillRect(0, 0, 100, 10);
+          ctx.transform(cos, sin, -sin, cos, 0, 0);
+        }
+      }
+      drawExampleFive();
     </script>
   </body>
 </html>
