@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>像素操作</title>
+    <style>
+      #color {
+        display: inline-block;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <canvas id="c1"></canvas>
+    </div>
+    <div>
+      <canvas id="c2" width="500" height="500"></canvas>
+      <div id="color"></div>
+    </div>
+    <div>
+      <canvas id="c3"></canvas>
+    </div>
+
+    <script>
+      const createArr = (model, count) => {
+        let result = [];
+        while (count--) {
+          result.push(...model);
+        }
+        return result;
+      };
+
+      // 添加dom
+      const createElement = ({ parent, tag, id = "", cls = "", text = "" }) => {
+        const elem = document.createElement(tag);
+        elem.id = id;
+        elem.className = cls;
+        elem.textContent = text;
+        parent = parent || document.body;
+        parent.appendChild(elem);
+
+        return elem;
+      };
+
+      // canvas绘制图片
+      const renderCanvas = ({ src }) =>
+        new Promise((resolve, reject) => {
+          const container = document.createElement("div");
+          container.className = "container";
+
+          // canvas
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          // 颜色容器
+          const colorElm = document.createElement("div");
+          colorElm.style.display = "inline-block";
+          colorElm.style.width = "160px";
+          colorElm.style.height = "160px";
+          colorElm.style.borderRadius = "50%";
+
+          // 绘制图片
+          const img = new Image();
+          img.addEventListener("load", loadCallback);
+          img.src = src;
+          function loadCallback() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            // 添加到 dom
+            container.appendChild(canvas);
+            container.appendChild(colorElm);
+            document.body.appendChild(container);
+
+            ctx.drawImage(img, 0, 0);
+            resolve({ container, canvas, ctx, colorElm });
+          }
+        });
+
+      // 获取鼠标经过的像素
+      async function drawExampleOne() {
+        const { canvas, ctx, colorElm } = await renderCanvas({
+          src: "https://mdn.mozillademos.org/files/5397/rhino.jpg"
+        });
+
+        canvas.addEventListener("mousemove", pick);
+        function pick({ layerX: x, layerY: y }) {
+          const { data } = ctx.getImageData(x, y, 1, 1);
+          const [r, g, b, a] = data;
+          const rgba = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+          colorElm.style.backgroundColor = rgba;
+        }
+      }
+      drawExampleOne();
+
+      // 写入像素 - 简单 demo
+      function drawExampleTwo() {
+        const ctx = document.getElementById("c2").getContext("2d");
+
+        const arr = createArr([0, 0, 0, 255], 50);
+        const dataArray = new Uint8ClampedArray(arr);
+        const imageData = new ImageData(dataArray, 10, 5);
+
+        ctx.putImageData(imageData, 100, 100);
+      }
+      drawExampleTwo();
+
+      // 写入像素 - 图片灰度和反相颜色
+      async function drawExampleThree() {
+        const { container, canvas, ctx } = await renderCanvas({
+          src: "https://mdn.mozillademos.org/files/5397/rhino.jpg"
+        });
+
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let { data } = imageData;        
+
+        // 反相颜色
+        const invert = () => {
+          for (let i = 0; i < data.length; i += 4) {
+            [i, i + 1, i + 2].forEach(idx => {
+              data[idx] = 255 - data[idx];
+            });
+          }
+          ctx.putImageData(imageData, 0, 0);
+        };
+
+        // 灰度
+        const grayScale = () => {
+          for (let i = 0; i < data.length; i += 4) {
+            const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+            data[i] = data[i + 1] = data[i + 2] = avg;
+          }
+          ctx.putImageData(imageData, 0, 0);
+        };
+
+        // 添加测试节点
+        const invertBtn = createElement({
+          parent: container,
+          tag: "button",
+          id: "invert-btn",
+          text: "invert"
+        });
+        invertBtn.addEventListener("click", invert);
+
+        // 添加测试节点
+        const grayScaleBtn = createElement({
+          parent: container,
+          tag: "button",
+          id: "grayscale-btn",
+          text: "grayscale"
+        });
+        grayScaleBtn.addEventListener("click", grayScale);
+      }
+      drawExampleThree();
+    </script>
+  </body>
+</html>
