@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>基本动画</title>
+  </head>
+  <body>
+    <div><canvas id="c1" height="300px"></canvas></div>
+    <div><canvas id="c2" height="300px"></canvas></div>
+    <div><canvas id="c3" width="800" height="200"></canvas></div>
+
+    <script>
+      // 绘制一个太阳系动画
+      function drawExampleOne() {
+        const sun = new Image();
+        const moon = new Image();
+        const earth = new Image();        
+        // [sun, moon, earth].forEach(item => item.crossOrigin = 'anonymous');
+
+        init();
+
+        function init() {
+          sun.src = "https://mdn.mozillademos.org/files/1456/Canvas_sun.png";
+          moon.src = "https://mdn.mozillademos.org/files/1443/Canvas_moon.png";
+          earth.src =
+            "https://mdn.mozillademos.org/files/1429/Canvas_earth.png";
+          window.requestAnimationFrame(draw);
+        }
+
+        function draw() {
+          const ctx = document.getElementById("c1").getContext("2d");
+
+          ctx.globalCompositeOperation = "destination-over";
+          ctx.clearRect(0, 0, 300, 300);
+
+          ctx.fillStyle = "rgba(0,0,0,0.4)";
+          ctx.strokeStyle = "rgba(0,153,255,0.4)";
+          ctx.save();
+          ctx.translate(150, 150);
+
+          const time = new Date();
+
+          // 地球 动画帧
+          ctx.rotate(
+            ((2 * Math.PI) / 60) * time.getSeconds() +
+              ((2 * Math.PI) / 60000) * time.getMilliseconds()
+          );
+          ctx.translate(105, 0);
+          ctx.fillRect(0, -12, 24, 24);
+          ctx.drawImage(earth, -12, -12);
+
+          // 月亮 动画帧
+          ctx.save();
+          ctx.rotate(
+            ((2 * Math.PI) / 6) * time.getSeconds() +
+              ((2 * Math.PI) / 6000) * time.getMilliseconds()
+          );
+          ctx.translate(0, 28.5);
+          ctx.drawImage(moon, -3.5, -3.5);
+          ctx.restore();
+
+          // 还原
+          ctx.restore();
+
+          // 绘制地球轨道
+          ctx.beginPath();
+          ctx.arc(150, 150, 105, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // 绘制太阳
+          ctx.drawImage(sun, 0, 0, 300, 300);
+
+          // 重复动画
+          window.requestAnimationFrame(draw);
+        }
+      }
+      drawExampleOne();
+
+      /****************************************************************************************/
+
+      // 绘制一个时钟动画
+      function drawExampleTwo() {
+        init();
+
+        function init() {
+          window.requestAnimationFrame(draw);
+        }
+
+        function draw() {
+          const ctx = document.getElementById("c2").getContext("2d");
+          const now = new Date();
+
+          ctx.save();
+
+          ctx.clearRect(0, 0, 150, 150);
+          ctx.translate(75, 75);
+          ctx.scale(0.4, 0.4);
+          ctx.rotate(-Math.PI / 2);
+          ctx.strokeStyle = "black";
+          ctx.fillStyle = "white";
+          ctx.lineWidth = 8;
+          ctx.lineCap = "round";
+
+          // 时针 - 刻度
+          ctx.save();
+          for (let i = 0; i < 12; i++) {
+            ctx.beginPath();
+            ctx.rotate(Math.PI / 6);
+            ctx.moveTo(100, 0);
+            ctx.lineTo(120, 0);
+            ctx.stroke();
+          }
+          ctx.restore();
+
+          // 分针 - 刻度
+          ctx.save();
+          ctx.lineWidth = 5;
+          for (i = 0; i < 60; i++) {
+            if (i % 5 !== 0) {
+              ctx.beginPath();
+              ctx.moveTo(117, 0);
+              ctx.lineTo(120, 0);
+              ctx.stroke();
+            }
+            ctx.rotate(Math.PI / 30);
+          }
+          ctx.restore();
+
+          // 计算时间
+          let hr = now.getHours();
+          let min = now.getMinutes();
+          let sec = now.getSeconds();
+          hr = hr >= 12 ? hr - 12 : hr;
+
+          ctx.fillStyle = "black";
+
+          // 时针 - 动画帧
+          ctx.save();
+          ctx.rotate(
+            hr * (Math.PI / 6) + (Math.PI / 360) * min + (Math.PI / 21600) * sec
+          );
+          ctx.lineWidth = 14;
+          ctx.beginPath();
+          ctx.moveTo(-20, 0);
+          ctx.lineTo(80, 0);
+          ctx.stroke();
+          ctx.restore();
+
+          // 分针 - 动画帧
+          ctx.save();
+          ctx.rotate((Math.PI / 30) * min + (Math.PI / 1800) * sec);
+          ctx.lineWidth = 8;
+          ctx.beginPath();
+          ctx.moveTo(-28, 0);
+          ctx.lineTo(112, 0);
+          ctx.stroke();
+          ctx.restore();
+
+          // 秒针 - 动画帧
+          // ctx.save();
+          // ctx.rotate((sec * Math.PI) / 30);
+          // ctx.strokeStyle = "#D40000";
+          // ctx.fillStyle = "#D40000";
+          // ctx.lineWidth = 6;
+          // ctx.beginPath();
+          // ctx.moveTo(-30, 0);
+          // ctx.lineTo(83, 0);
+          // ctx.stroke();
+          // ctx.beginPath();
+          // ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
+          // ctx.fill();
+          // ctx.beginPath();
+          // ctx.arc(95, 0, 10, 0, Math.PI * 2, true);
+          // ctx.stroke();
+          // ctx.fillStyle = "rgba(0,0,0,0)";
+          // ctx.arc(0, 0, 3, 0, Math.PI * 2, true);
+          // ctx.fill();
+          // ctx.restore();
+          ctx.save();
+          ctx.rotate((sec * Math.PI) / 30);
+          ctx.lineWidth = 6;
+          ctx.strokeStyle = "#D40000";
+          ctx.beginPath();
+          ctx.moveTo(-28, 0);
+          ctx.lineTo(112, 0);
+          ctx.stroke();
+          ctx.restore();
+
+          // 加个圆边框
+          ctx.beginPath();
+          ctx.lineWidth = 14;
+          ctx.strokeStyle = "#325FA2";
+          ctx.arc(0, 0, 142, 0, Math.PI * 2, true);
+          ctx.stroke();
+
+          ctx.restore();
+
+          window.requestAnimationFrame(draw);
+        }
+      }
+      drawExampleTwo();
+
+      // 循环全景图片
+      function drawExampleThree() {
+        const img = new Image();
+        img.addEventListener("load", loadCallback);
+        img.src =
+          "https://mdn.mozillademos.org/files/4553/Capitan_Meadows,_Yosemite_National_Park.jpg";
+
+        // 定义
+        const canvasWidth = 800;
+        const canvasHeight = 200;
+        const scale = 1.05;
+
+        let ctx;
+        let imgW;
+        let imgH;
+        let clearX;
+        let clearY;
+        let dx = 0.75;
+        let x = 0;
+        let y = -4.5;
+
+        function loadCallback() {
+          init();
+        }
+
+        function init() {
+          ctx = document.getElementById("c3").getContext("2d");
+          imgW = img.width * scale;
+          imgH = img.height * scale;
+
+          if (imgW > canvasWidth) {
+            x = canvasWidth - imgW;
+          }
+
+          // 计算出清除区域
+          clearX = imgW > canvasWidth ? imgW : canvasWidth;
+          clearY = imgH > canvasHeight ? imgH : canvasHeight;
+
+          window.requestAnimationFrame(draw);
+        }
+
+        // 注意：函数内部调用了两个 drawImage
+        // 难点：怎么做无限循环，理解的话需要画图
+        function draw() {
+          ctx.clearRect(0, 0, clearX, clearY);
+
+          // 处理边界情况
+          if (imgW < canvasWidth) {
+            if (x > canvasWidth) {
+              x = 0;
+            }
+            if (x > canvasWidth - imgW) {
+              ctx.drawImage(img, x - canvasWidth + 1, y, imgW, imgH);
+            }
+          } else {            
+            // 如果大于 canvas 的宽，说明图片走完了，这个时候需要重置为初始值
+            if (x > canvasWidth) {
+              x = canvasWidth - imgW;
+            }
+            // 只要 执行过一次 draw（执行 x += dx）， 就会进入到这个判断。
+            // 也就是说，其实一直都有两个 drawImage 在执行。两个drawImage的坐标起点的 x 轴，隔了一个 imgW
+            if (x > canvasWidth - imgW) {              
+              ctx.drawImage(img, x - imgW + 1, y, imgW, imgH);
+            }
+          }
+
+          ctx.drawImage(img, x, y, imgW, imgH);
+          x += dx;
+
+          window.requestAnimationFrame(draw);
+        }
+      }
+      drawExampleThree();
+    </script>
+  </body>
+</html>

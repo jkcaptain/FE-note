@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>drawImage</title>
+  </head>
+  <body>
+    <div>
+      <canvas id="c1" width="600px" height="600px"> </canvas>
+    </div>
+
+    <script>
+      function drawExampleOne() {
+        let ctx = document.getElementById("c1").getContext("2d");
+
+        let img = new Image();
+        img.addEventListener("load", loadCallback);
+        img.src = "https://mdn.mozillademos.org/files/5397/rhino.jpg";
+
+        function loadCallback({ target }) {
+          ctx.drawImage(target, 0, 0);
+          ctx.drawImage(target, 0, 300, 130, 100);
+          ctx.drawImage(target, 33, 71, 104, 124, 300, 300, 80, 80);
+        }
+      }
+      drawExampleOne();
+    </script>
+  </body>
+</html>
