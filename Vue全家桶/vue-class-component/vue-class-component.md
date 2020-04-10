@@ -24,7 +24,7 @@ export default class HelloWorld extends Vue {
 
   // data
   message = 'helloWorld';
-  d
+  data(){
     return {}
   }
 
