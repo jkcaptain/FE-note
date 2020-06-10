@@ -1,7 +1,6 @@
-# FE-note
-前端学习笔记
+## FE-note
 
-good good study, day day up
+### good good study, day day up
 
 [数据结构与算法](./数据结构与算法/README.md)
 
