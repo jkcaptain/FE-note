@@ -32,10 +32,11 @@ export default class JosephCircle {
     let currNode = undefined;
     while (list.size() !== 2) {
       currNode = list.advance(this.rule - 1, currNode);
-      // console.log(currNode.value);
 
       list.remove(currNode.value);
       currNode = currNode.next;
+
+      list.display();
     }
 
     list.toString();

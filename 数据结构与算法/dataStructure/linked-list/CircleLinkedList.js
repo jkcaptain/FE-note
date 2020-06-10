@@ -10,7 +10,7 @@ class CircleLinkedListNode {
 // append, prepend,
 // insert, remove
 // advance, back
-// size, indexOf, getHead, toString
+// size, indexOf, getHead, toString, display
 export default class CircleLinkedList {
   constructor() {
     this.head = new CircleLinkedListNode('head');
@@ -173,7 +173,16 @@ export default class CircleLinkedList {
       });
       currNode = currNode.next;
     } while (currNode && currNode.value !== headValue);
-
+    
     console.log(values);
+    return values;
+  }
+
+  display() {
+    const values = this.toString();
+
+    const newValues = values.map((item) => item.value);
+
+    console.log(newValues.join(' , '));
   }
 }
