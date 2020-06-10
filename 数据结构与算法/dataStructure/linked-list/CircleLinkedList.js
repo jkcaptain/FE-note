@@ -106,6 +106,10 @@ export default class CircleLinkedList {
     let prevNode = this.findPrevious(value);
 
     // 建立连接后，删除当前节点
+    if (this.head === currNode) {
+      this.head = currNode.next;
+    }
+
     prevNode.next = currNode.next;
     currNode = null;
   }

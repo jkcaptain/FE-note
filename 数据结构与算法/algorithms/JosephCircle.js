@@ -14,9 +14,9 @@ export default class JosephCircle {
   init() {
     let { list } = this;
 
-    for (let i = 0; i < this.total; i++) {
+    for (let i = 1; i <= this.total; i++) {
       const value = `solider-${i}`;
-      if (i === 0) {
+      if (i === 1) {
         list.head.value = value;
       } else {
         list.append(value);
@@ -29,20 +29,19 @@ export default class JosephCircle {
 
     let { list } = this;
 
+    let currNode = undefined;
     while (list.size() !== 2) {
-      const currNode = list.advance(this.rule);
+      currNode = list.advance(this.rule - 1, currNode);
+      // console.log(currNode.value);
+
       list.remove(currNode.value);
+      currNode = currNode.next;
     }
+
+    list.toString();
   }
 }
 
 // 数学解法
-function jcMath(n, m) {
-  let ans = 0;
-  for (let i = 1; i <= n; i++) {
-    ans = (ans + m) % i;
-  }
-  console.log(ans + 1);  
-}
 
 // 递归解法
