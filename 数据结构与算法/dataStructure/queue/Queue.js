@@ -1,6 +1,7 @@
 // FIFO
 export default class Queue {
   constructor() {
+    this.top = 0;
     this.dataStore = [];
   }
 
