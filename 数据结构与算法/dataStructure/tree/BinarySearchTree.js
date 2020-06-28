@@ -47,9 +47,13 @@ class BST {
   }
 
   // 删除节点
-  remove(data) {}
+  remove(data) {
+    // 暂时没理解
+    // https://blog.csdn.net/isea533/article/details/80345507
+  }
 
-  // 中序遍历 - 按照节点的键值，以升序方式查找。 也就是先左子树，到根节点，再到右子树
+  // 中序遍历 - 按照节点的键值，以升序方式查找。 也就是先左子树，到根节点，再到右子树。 先左后根再后：左根右
+  // 1. 中序遍历左子树  2. 访问根节点  3. 中序遍历右子树
   inOrder(node) {
     if (node) {
       this.inOrder(node.left);
@@ -58,7 +62,8 @@ class BST {
     }
   }
 
-  // 先序遍历 - 先访问根节点，然后以同样的方式访问左子树和右子树。
+  // 先序遍历 - 先访问根节点，然后以同样的方式访问左子树和右子树。- 先根后左再右：根左右
+
   preOrder(node) {
     if (node) {
       console.log(node.show());
@@ -67,7 +72,8 @@ class BST {
     }
   }
 
-  // 后序遍历 - 先访问叶子节点，从左子树到右子树，再到根节点。
+  // 后序遍历 - 先访问叶子节点，从左子树到右子树，再到根节点。- 先左后右再根：左右根
+  // 1. 后续遍历左子树  2. 后续遍历右子树  3. 访问根节点
   postOrder(node) {
     if (node) {
       this.postOrder(node.left);
@@ -77,13 +83,37 @@ class BST {
   }
 
   // 查找给定值
-  getNode(data) {}
+  find(data) {
+    let current = this.root;
+
+    while (current) {
+      if (data === current.data) {
+        return current;
+      } else if (data < current.data) {
+        current = current.left;
+      } else if (data > current.data) {
+        current = current.right;
+      }
+    }
+
+    return null;
+  }
 
   // 查找最大值
-  getMax() {}
+  getMax(current = this.root) {
+    while (current.right) {
+      current = current.right;
+    }
+    return current.data;
+  }
 
   // 查找最小值
-  getMin() {}
+  getMin(current = this.root) {
+    while (current.left) {
+      current = current.left;
+    }
+    return current.data;
+  }
 }
 
 let nums = new BST();
